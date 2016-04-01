@@ -44,6 +44,15 @@ const DATA_TO_ATTR = {
   },
 };
 
+// Map style to HTML tag
+const INLINE_STYLE_TO_TAG = {
+  [BOLD]: 'strong',
+  [CODE]: 'code',
+  [ITALIC]: 'em',
+  [STRIKETHROUGH]: 'del',
+  [UNDERLINE]: 'ins',
+};
+
 // The reason this returns an array is because a single block might get wrapped
 // in two tags.
 function getTags(blockType: string): Array<string> {
@@ -92,8 +101,9 @@ class MarkupGenerator {
   totalBlocks: number;
   wrapperTag: ?string;
 
-  constructor(contentState: ContentState) {
+  constructor(contentState: ContentState, inlineStyleToTagMap: Object) {
     this.contentState = contentState;
+    this.inlineStyleToTagMap = inlineStyleToTagMap;
   }
 
   generate(): string {
@@ -212,26 +222,33 @@ class MarkupGenerator {
     text = this.preserveWhitespace(text);
     let charMetaList: CharacterMetaList = block.getCharacterList();
     let entityPieces = getEntityRanges(text, charMetaList);
+    // Merge core tag map with user provided map
+    let tagMap = {
+      ...INLINE_STYLE_TO_TAG,
+      ...this.inlineStyleToTagMap,
+    };
     return entityPieces.map(([entityKey, stylePieces]) => {
       let content = stylePieces.map(([text, style]) => {
         let content = encodeContent(text);
         // These are reverse alphabetical by tag name.
         if (style.has(BOLD)) {
-          content = `<strong>${content}</strong>`;
+          content = `<${tagMap[BOLD]}>${content}</${tagMap[BOLD]}>`;
         }
         if (style.has(UNDERLINE)) {
-          content = `<ins>${content}</ins>`;
+          content = `<${tagMap[UNDERLINE]}>${content}</${tagMap[UNDERLINE]}>`;
         }
         if (style.has(ITALIC)) {
-          content = `<em>${content}</em>`;
+          content = `<${tagMap[ITALIC]}>${content}</${tagMap[ITALIC]}>`;
         }
         if (style.has(STRIKETHROUGH)) {
-          content = `<del>${content}</del>`;
+          content = `<${tagMap[STRIKETHROUGH]}>${content}</${tagMap[STRIKETHROUGH]}>`;
         }
         if (style.has(CODE)) {
           // If our block type is CODE then we are already wrapping the whole
           // block in a `<code>` so don't wrap inline code elements.
-          content = (blockType === BLOCK_TYPE.CODE) ? content : `<code>${content}</code>`;
+          content = (blockType === BLOCK_TYPE.CODE) ?
+            content :
+            `<${tagMap[CODE]}>${content}</${tagMap[CODE]}>`;
         }
         return content;
       }).join('');
@@ -307,6 +324,6 @@ function encodeAttr(text: string): string {
     .split('"').join('&quot;');
 }
 
-export default function stateToHTML(content: ContentState): string {
-  return new MarkupGenerator(content).generate();
+export default function stateToHTML(content: ContentState, inlineStyleToTagMap: Object): string {
+  return new MarkupGenerator(content, inlineStyleToTagMap).generate();
 }
