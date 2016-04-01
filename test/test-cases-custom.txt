@@ -1,24 +1,29 @@
 # Custom BOLD tag
-{"BOLD": "b"}
+{"inlineTags":{"BOLD": "b"}}
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"BOLD"}],"entityRanges":[]}]}
 <p>asd<b>f</b></p>
 
 # Custom ITALIC tag
-{"ITALIC": "i"}
+{"inlineTags":{"ITALIC": "i"}}
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"ITALIC"}],"entityRanges":[]}]}
 <p>asd<i>f</i></p>
 
 # Custom UNDERLINE tag
-{"UNDERLINE": "u"}
+{"inlineTags":{"UNDERLINE": "u"}}
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"UNDERLINE"}],"entityRanges":[]}]}
 <p>asd<u>f</u></p>
 
 # Custom STRIKETHROUGH tag
-{"STRIKETHROUGH": "s"}
+{"inlineTags":{"STRIKETHROUGH": "s"}}
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"STRIKETHROUGH"}],"entityRanges":[]}]}
 <p>asd<s>f</s></p>
 
 # Custom CODE tag
-{"CODE": "pre"}
+{"inlineTags":{"CODE": "pre"}}
 {"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":3,"length":1,"style":"CODE"}],"entityRanges":[]}]}
 <p>asd<pre>f</pre></p>
+
+# No block tags
+{"blockTags": false}
+{"entityMap":{},"blocks":[{"key":"99n0j","text":"asdf","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+asdf

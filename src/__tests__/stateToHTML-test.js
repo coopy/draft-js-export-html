@@ -55,14 +55,15 @@ describe('stateToHTML', () => {
     });
   });
 
-  describe('Custom inline tags', () => {
+  describe('Custom tags', () => {
     testCasesCustom.forEach((testCase) => {
       let {description, tags, state, html} = testCase;
+      let {inlineTags, blockTags} = tags;
       it(`should render ${description}`, () => {
         let contentState = ContentState.createFromBlockArray(
           convertFromRaw(state)
         );
-        expect(stateToHTML(contentState, tags)).toBe(html);
+        expect(stateToHTML(contentState, {inlineTags, blockTags})).toBe(html);
       });
     });
   });

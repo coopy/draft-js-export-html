@@ -101,9 +101,9 @@ class MarkupGenerator {
   totalBlocks: number;
   wrapperTag: ?string;
 
-  constructor(contentState: ContentState, inlineStyleToTagMap: Object) {
+  constructor(contentState: ContentState, options: Object) {
     this.contentState = contentState;
-    this.inlineStyleToTagMap = inlineStyleToTagMap;
+    this.options = options;
   }
 
   generate(): string {
@@ -173,22 +173,26 @@ class MarkupGenerator {
   }
 
   writeStartTag(blockType) {
-    let tags = getTags(blockType);
-    for (let tag of tags) {
-      this.output.push(`<${tag}>`);
+    if (this.options.blockTags !== false) {
+      let tags = getTags(blockType);
+      for (let tag of tags) {
+        this.output.push(`<${tag}>`);
+      }
     }
   }
 
   writeEndTag(blockType) {
-    let tags = getTags(blockType);
-    if (tags.length === 1) {
-      this.output.push(`</${tags[0]}>\n`);
-    } else {
-      let output = [];
-      for (let tag of tags) {
-        output.unshift(`</${tag}>`);
+    if (this.options.blockTags !== false) {
+      let tags = getTags(blockType);
+      if (tags.length === 1) {
+        this.output.push(`</${tags[0]}>\n`);
+      } else {
+        let output = [];
+        for (let tag of tags) {
+          output.unshift(`</${tag}>`);
+        }
+        this.output.push(output.join('') + '\n');
       }
-      this.output.push(output.join('') + '\n');
     }
   }
 
@@ -225,7 +229,7 @@ class MarkupGenerator {
     // Merge core tag map with user provided map
     let tagMap = {
       ...INLINE_STYLE_TO_TAG,
-      ...this.inlineStyleToTagMap,
+      ...this.options.inlineTags,
     };
     return entityPieces.map(([entityKey, stylePieces]) => {
       let content = stylePieces.map(([text, style]) => {
@@ -324,6 +328,6 @@ function encodeAttr(text: string): string {
     .split('"').join('&quot;');
 }
 
-export default function stateToHTML(content: ContentState, inlineStyleToTagMap: Object): string {
-  return new MarkupGenerator(content, inlineStyleToTagMap).generate();
+export default function stateToHTML(content: ContentState, options = {}: Object): string {
+  return new MarkupGenerator(content, options).generate();
 }
