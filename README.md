@@ -10,10 +10,34 @@ It was extracted from [React-RTE](https://react-rte.org) and placed into a separ
 
 ## How to Use
 
-    import {stateToHTML} from 'draft-js-export-html';
-    let html = stateToHTML(contentState);
+```js
+import {stateToHTML} from 'draft-js-export-html';
+let html = stateToHTML(contentState);
+```
 
 This project is still under development. If you want to help out, please open an issue to discuss or join us on [Slack](https://draftjs.slack.com/).
+
+### Options
+
+You can define custom inline tags to use by supplying an `options` object to `stateToHTML`:
+
+```js
+import {stateToHTML} from 'draft-js-export-html';
+let options = {inlineTags: {BOLD: 'b'}};
+let HTML = stateToHTML(contentState);
+```
+
+You can disable the output of block-level tags:
+
+```js
+import {stateToHTML} from 'draft-js-export-html';
+let options = {blockTags: false};
+let HTML = stateToHTML(contentState);
+```
+
+TODO:
+- Disabling of specific block-level tags.
+- Support for custom block-level tags.
 
 ## License
 
