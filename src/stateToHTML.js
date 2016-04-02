@@ -234,25 +234,18 @@ class MarkupGenerator {
     return entityPieces.map(([entityKey, stylePieces]) => {
       let content = stylePieces.map(([text, style]) => {
         let content = encodeContent(text);
-        // These are reverse alphabetical by tag name.
-        if (style.has(BOLD)) {
-          content = `<${tagMap[BOLD]}>${content}</${tagMap[BOLD]}>`;
-        }
-        if (style.has(UNDERLINE)) {
-          content = `<${tagMap[UNDERLINE]}>${content}</${tagMap[UNDERLINE]}>`;
-        }
-        if (style.has(ITALIC)) {
-          content = `<${tagMap[ITALIC]}>${content}</${tagMap[ITALIC]}>`;
-        }
-        if (style.has(STRIKETHROUGH)) {
-          content = `<${tagMap[STRIKETHROUGH]}>${content}</${tagMap[STRIKETHROUGH]}>`;
-        }
+        let styleTypes = Object.keys(tagMap);
+        styleTypes.forEach((styleType) => {
+          if (styleType !== CODE && style.has(styleType)) {
+            content = `<${tagMap[styleType]}>${content}</${tagMap[styleType]}>`;
+          }
+        });
         if (style.has(CODE)) {
           // If our block type is CODE then we are already wrapping the whole
           // block in a `<code>` so don't wrap inline code elements.
           content = (blockType === BLOCK_TYPE.CODE) ?
-            content :
-            `<${tagMap[CODE]}>${content}</${tagMap[CODE]}>`;
+          content :
+          `<${tagMap[CODE]}>${content}</${tagMap[CODE]}>`;
         }
         return content;
       }).join('');
