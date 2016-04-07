@@ -20,7 +20,7 @@ const {
 } = INLINE_STYLE;
 
 const INDENT = '  ';
-const BREAK = '<br/>';
+const BREAK = '<br>';
 
 // Map entity data to element attributes.
 const ENTITY_ATTR_MAP = {
