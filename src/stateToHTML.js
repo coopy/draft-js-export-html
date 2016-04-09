@@ -310,7 +310,7 @@ function encodeContent(text: string): string {
     .split('<').join('&lt;')
     .split('>').join('&gt;')
     .split('\xA0').join('&nbsp;')
-    .split('\n').join(BREAK + '\n');
+    .split('\n').join(BREAK);
 }
 
 function encodeAttr(text: string): string {
