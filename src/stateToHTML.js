@@ -6,7 +6,7 @@ import {
   BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE,
 } from 'draft-js-tools';
 
-import type {ContentState, ContentBlock, EntityInstance} from 'draft-js';
+import type {ContentState, ContentBlock, EntityInstance} from 'draft-js-coopy';
 import type {CharacterMetaList} from 'draft-js-tools';
 
 type StringMap = {[key: string]: ?string};
