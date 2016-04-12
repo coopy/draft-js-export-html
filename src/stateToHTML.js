@@ -1,6 +1,6 @@
 /* @flow */
 
-import {Entity} from 'draft-js';
+import {Entity} from 'draft-js-coopy';
 import {
   getEntityRanges,
   BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE,
