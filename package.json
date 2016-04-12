@@ -1,5 +1,5 @@
 {
-  "name": "draft-js-export-html",
+  "name": "draft-js-export-html-coopy",
   "version": "0.1.9",
   "description": "DraftJS: Export ContentState to HTML",
   "main": "lib/main.js",
